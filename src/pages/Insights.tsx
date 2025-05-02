@@ -27,9 +27,9 @@ const Insights = () => {
 
   // Function to render a mini progress bar
   const renderProgressBar = (percentage: number) => (
-    <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+    <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
       <div 
-        className="bg-habito-purple h-full"
+        className="bg-gradient-to-r from-purple-600 to-indigo-600 h-full"
         style={{ width: `${percentage}%` }}
       ></div>
     </div>
@@ -44,17 +44,29 @@ const Insights = () => {
     return acc;
   }, {} as Record<HabitCategory, Habit[]>);
 
-  // Convert category key to display name
+  // Convert category key to display name in Indonesian
   const getCategoryName = (key: string): string => {
-    return key.charAt(0).toUpperCase() + key.slice(1);
+    const categoryNames: Record<string, string> = {
+      "fitness": "Kebugaran",
+      "learning": "Pembelajaran",
+      "wellness": "Kesehatan",
+      "social": "Sosial",
+      "productivity": "Produktivitas",
+      "creativity": "Kreativitas",
+      "programming": "Pemrograman",
+      "spiritual": "Spiritual",
+      "other": "Lainnya"
+    };
+    
+    return categoryNames[key] || key.charAt(0).toUpperCase() + key.slice(1);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 md:pt-20">
+    <div className="min-h-screen bg-tech-grid bg-tech-dark pb-20 md:pb-0 md:pt-20">
       <NavBar />
       
       <div className="container max-w-4xl px-4 py-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-8">Insights</h1>
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text mb-8">Wawasan</h1>
         
         <div className="grid gap-6">
           {/* Overall insights card */}
@@ -62,8 +74,8 @@ const Insights = () => {
           
           {/* Habits by category */}
           {Object.keys(habitsByCategory).length > 0 ? (
-            <Card className="p-6">
-              <h3 className="text-lg font-medium mb-4">Habits by Category</h3>
+            <Card className="p-6 tech-card">
+              <h3 className="text-lg font-medium mb-4 text-white">Kebiasaan berdasarkan Kategori</h3>
               <div className="space-y-4">
                 {Object.entries(habitsByCategory).map(([category, categoryHabits]) => {
                   const avgCompletionRate = Math.round(
@@ -76,9 +88,9 @@ const Insights = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <span className={`w-3 h-3 rounded-full ${categoryColors[category as HabitCategory]} mr-2`}></span>
-                          <span className="text-sm font-medium">{getCategoryName(category)} ({categoryHabits.length})</span>
+                          <span className="text-sm font-medium text-gray-200">{getCategoryName(category)} ({categoryHabits.length})</span>
                         </div>
-                        <span className="text-sm text-gray-500">{avgCompletionRate}%</span>
+                        <span className="text-sm text-gray-400">{avgCompletionRate}%</span>
                       </div>
                       {renderProgressBar(avgCompletionRate)}
                     </div>
@@ -87,28 +99,30 @@ const Insights = () => {
               </div>
             </Card>
           ) : (
-            <Card className="p-6 text-center">
-              <p className="text-gray-500">No habit data to analyze</p>
+            <Card className="p-6 tech-card text-center">
+              <p className="text-gray-400">Belum ada data kebiasaan untuk dianalisis</p>
             </Card>
           )}
           
           {/* Streaks Leaderboard */}
           {habits.length > 0 && (
-            <Card className="p-6">
-              <h3 className="text-lg font-medium mb-4">Habit Streaks</h3>
+            <Card className="p-6 tech-card">
+              <h3 className="text-lg font-medium mb-4 text-white">Rentetan Kebiasaan</h3>
               <div className="space-y-2">
                 {[...habits]
                   .sort((a, b) => b.streak - a.streak)
                   .slice(0, 5)
                   .map((habit) => (
                     <div key={habit.id} className="flex items-center justify-between py-2">
-                      <span className="text-sm">{habit.name}</span>
+                      <span className="text-sm text-gray-300">{habit.name}</span>
                       <span 
                         className={`px-2 py-1 rounded text-xs font-medium ${
-                          habit.streak > 0 ? "bg-habito-purple-light text-habito-purple-dark" : "bg-gray-100 text-gray-500"
+                          habit.streak > 0 
+                            ? "bg-gradient-to-r from-purple-900/50 to-indigo-900/50 text-purple-300 border border-purple-500/20" 
+                            : "bg-gray-800 text-gray-500"
                         }`}
                       >
-                        {habit.streak} day{habit.streak !== 1 ? 's' : ''}
+                        {habit.streak} hari{habit.streak !== 1 ? '' : ''}
                       </span>
                     </div>
                   ))

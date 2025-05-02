@@ -29,18 +29,18 @@ const Achievements = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-0 md:pt-20">
+    <div className="min-h-screen bg-tech-grid bg-tech-dark pb-20 md:pb-0 md:pt-20">
       <NavBar />
       
       <div className="container max-w-4xl px-4 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-800">Achievements</h1>
-          <span className="bg-habito-purple-light text-habito-purple-dark rounded-full px-3 py-1 text-sm">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text">Lencana Prestasi</h1>
+          <span className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 backdrop-blur-sm border border-purple-500/20 text-purple-300 rounded-full px-3 py-1 text-sm">
             {unlockedCount} / {achievements.length}
           </span>
         </div>
         
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-gray-900/70 backdrop-blur-md border border-purple-500/20 rounded-lg shadow-lg p-6">
           <div className="badge-grid">
             {achievements.map((achievement) => (
               <AchievementBadge key={achievement.id} achievement={achievement} />
