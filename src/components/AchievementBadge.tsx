@@ -36,28 +36,29 @@ const AchievementBadge = ({ achievement }: AchievementBadgeProps) => {
     }
   };
 
-  // Determine rarity-based styles
+  // Determine rarity-based styles (using achievement type instead of rarity)
   const getRarityStyles = () => {
-    switch (achievement.rarity) {
-      case "common":
+    // Use the type field instead of rarity since rarity doesn't exist in the Achievement type
+    switch (achievement.type) {
+      case "daily":
         return {
           gradient: "from-blue-700 to-cyan-600",
           glow: "rgba(59, 130, 246, 0.6)",
           textColor: "text-blue-300"
         };
-      case "rare":
+      case "weekly":
         return {
           gradient: "from-purple-700 to-indigo-600", 
           glow: "rgba(155, 135, 245, 0.6)",
           textColor: "text-purple-300"
         };
-      case "epic":
+      case "monthly":
         return {
           gradient: "from-amber-500 to-orange-600",
           glow: "rgba(245, 158, 11, 0.6)",
           textColor: "text-amber-300"
         };
-      case "legendary":
+      case "special":
         return {
           gradient: "from-rose-500 to-pink-600",
           glow: "rgba(244, 63, 94, 0.6)",

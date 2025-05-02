@@ -175,9 +175,9 @@ const Index = () => {
         transition={{ duration: 0.5 }}
         className="container max-w-4xl px-4 py-8"
       >
-        {/* Tech-themed Header section with gradient background */}
+        {/* Dark tech-themed Header section with gradient background */}
         <div className="mb-8 bg-gradient-to-r from-tech-dark to-purple-900 rounded-xl shadow-xl overflow-hidden">
-          <div className="backdrop-blur-sm p-6 relative">
+          <div className="backdrop-blur-sm p-6 relative tech-bg">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-purple-500/20 blur-xl"></div>
               <div className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-indigo-500/20 blur-xl"></div>
