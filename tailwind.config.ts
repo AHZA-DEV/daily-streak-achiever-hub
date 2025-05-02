@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,22 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom habit tracker colors
+                habito: {
+                    purple: {
+                        DEFAULT: '#9b87f5',
+                        dark: '#7E69AB',
+                        light: '#E5DEFF',
+                    },
+                    green: '#F2FCE2',
+                    yellow: '#FEF7CD',
+                    orange: '#FEC6A1',
+                    pink: '#FFDEE2',
+                    peach: '#FDE1D3',
+                    blue: '#D3E4FD',
+                    gray: '#F1F0FB',
+                }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +100,38 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'complete-habit': {
+                    '0%': {
+                        transform: 'scale(1)',
+                    },
+                    '50%': {
+                        transform: 'scale(1.1)'
+                    },
+                    '100%': {
+                        transform: 'scale(1)'
+                    }
+                },
+                'badge-shine': {
+                    '0%': {
+                        opacity: '0.5',
+                        transform: 'scale(0.95)'
+                    },
+                    '50%': {
+                        opacity: '1',
+                        transform: 'scale(1.05)'
+                    },
+                    '100%': {
+                        opacity: '0.5',
+                        transform: 'scale(0.95)'
+                    }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'complete-habit': 'complete-habit 0.4s ease-in-out',
+                'badge-shine': 'badge-shine 2s infinite ease-in-out'
 			}
 		}
 	},
