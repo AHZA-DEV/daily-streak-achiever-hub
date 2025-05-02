@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,18 +17,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Habit, HabitCategory } from "@/types/habit";
+import { Habit, HabitCategory, HabitFrequency } from "@/types/habit";
 import { generateId } from "@/lib/habitUtils";
 import { Plus } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface NewHabitDialogProps {
   onAddHabit: (habit: Habit) => void;
 }
 
 const CATEGORIES: { value: HabitCategory; label: string }[] = [
-  { value: "fitness", label: "Fitness" },
+  { value: "programming", label: "Programming" },
   { value: "learning", label: "Learning" },
   { value: "wellness", label: "Wellness" },
+  { value: "spiritual", label: "Spiritual" },
+  { value: "fitness", label: "Fitness" },
   { value: "social", label: "Social" },
   { value: "productivity", label: "Productivity" },
   { value: "creativity", label: "Creativity" },
@@ -38,8 +42,15 @@ const CATEGORIES: { value: HabitCategory; label: string }[] = [
 const NewHabitDialog = ({ onAddHabit }: NewHabitDialogProps) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState<HabitCategory>("other");
+  const [category, setCategory] = useState<HabitCategory>("programming");
+  const [frequency, setFrequency] = useState<HabitFrequency>("daily");
+  const [target, setTarget] = useState<number>(1);
   const [notes, setNotes] = useState("");
+  const [showTarget, setShowTarget] = useState(false);
+
+  useEffect(() => {
+    setShowTarget(frequency === "weekly");
+  }, [frequency]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +61,8 @@ const NewHabitDialog = ({ onAddHabit }: NewHabitDialogProps) => {
       id: generateId(),
       name: name.trim(),
       category,
+      frequency,
+      ...(showTarget && { target }),
       notes: notes.trim() || undefined,
       createdAt: new Date(),
       completedDates: [],
@@ -64,7 +77,9 @@ const NewHabitDialog = ({ onAddHabit }: NewHabitDialogProps) => {
   
   const resetForm = () => {
     setName("");
-    setCategory("other");
+    setCategory("programming");
+    setFrequency("daily");
+    setTarget(1);
     setNotes("");
   };
 
@@ -91,6 +106,7 @@ const NewHabitDialog = ({ onAddHabit }: NewHabitDialogProps) => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
+            
             <div className="grid gap-2">
               <Label htmlFor="category">Category</Label>
               <Select value={category} onValueChange={(val) => setCategory(val as HabitCategory)}>
@@ -106,13 +122,48 @@ const NewHabitDialog = ({ onAddHabit }: NewHabitDialogProps) => {
                 </SelectContent>
               </Select>
             </div>
+            
+            <div className="grid gap-2">
+              <Label>Frequency</Label>
+              <RadioGroup 
+                value={frequency} 
+                onValueChange={(value) => setFrequency(value as HabitFrequency)}
+                className="flex space-x-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="daily" id="daily" />
+                  <Label htmlFor="daily" className="cursor-pointer">Daily</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="weekly" id="weekly" />
+                  <Label htmlFor="weekly" className="cursor-pointer">Weekly</Label>
+                </div>
+              </RadioGroup>
+            </div>
+            
+            {showTarget && (
+              <div className="grid gap-2">
+                <Label htmlFor="target">Weekly Target</Label>
+                <Input
+                  id="target"
+                  type="number"
+                  min="1"
+                  max="7"
+                  value={target}
+                  onChange={(e) => setTarget(Number(e.target.value))}
+                />
+              </div>
+            )}
+            
             <div className="grid gap-2">
               <Label htmlFor="notes">Notes (optional)</Label>
-              <Input
+              <Textarea
                 id="notes"
                 placeholder="Add some notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
+                className="resize-none"
+                rows={3}
               />
             </div>
           </div>

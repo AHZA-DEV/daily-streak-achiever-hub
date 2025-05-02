@@ -1,6 +1,5 @@
-
 import { format, isToday, isSameDay, addDays, parseISO, startOfWeek, subDays } from "date-fns";
-import { Achievement, Habit, HabitCategory } from "@/types/habit";
+import { Achievement, Habit, HabitCategory, Todo } from "@/types/habit";
 
 // Generate a unique ID
 export function generateId(): string {
@@ -143,6 +142,7 @@ export const defaultHabits: Habit[] = [
     id: generateId(),
     name: "Drink water",
     category: "wellness",
+    frequency: "daily",
     createdAt: new Date(),
     completedDates: [],
     streak: 0,
@@ -150,8 +150,9 @@ export const defaultHabits: Habit[] = [
   },
   {
     id: generateId(),
-    name: "Read for 30 minutes",
+    name: "Read 30-60 minutes",
     category: "learning",
+    frequency: "daily",
     createdAt: new Date(),
     completedDates: [],
     streak: 0,
@@ -159,12 +160,62 @@ export const defaultHabits: Habit[] = [
   },
   {
     id: generateId(),
-    name: "Exercise",
-    category: "fitness",
+    name: "Pray 5 times",
+    category: "spiritual",
+    frequency: "daily",
     createdAt: new Date(),
     completedDates: [],
     streak: 0,
     highestStreak: 0
+  },
+  {
+    id: generateId(),
+    name: "Complete programming tutorial video",
+    category: "programming",
+    frequency: "daily",
+    target: 5,
+    createdAt: new Date(),
+    completedDates: [],
+    streak: 0,
+    highestStreak: 0,
+    notes: "Target: 5 videos per week"
+  },
+  {
+    id: generateId(),
+    name: "Work on GitHub project",
+    category: "programming",
+    frequency: "weekly",
+    target: 2,
+    createdAt: new Date(),
+    completedDates: [],
+    streak: 0,
+    highestStreak: 0,
+    notes: "Finish 2 simple projects per week to upload"
+  }
+];
+
+// Default todos
+export const defaultTodos: Todo[] = [
+  {
+    id: generateId(),
+    text: "Set up React environment for new project",
+    completed: false,
+    createdAt: new Date(),
+    priority: "high"
+  },
+  {
+    id: generateId(),
+    text: "Review TypeScript documentation",
+    completed: false,
+    createdAt: new Date(),
+    priority: "medium"
+  },
+  {
+    id: generateId(),
+    text: "Fix GitHub repository issues",
+    completed: false,
+    createdAt: new Date(),
+    priority: "low"
   }
 ];
 
@@ -207,6 +258,24 @@ export const defaultAchievements: Achievement[] = [
     }
   },
   {
+    id: "programming-habit",
+    name: "Code Ninja",
+    description: "Create a programming habit",
+    icon: "code",
+    requirements: {
+      habitCategory: "programming"
+    }
+  },
+  {
+    id: "spiritual-habit",
+    name: "Soul Seeker",
+    description: "Create a spiritual habit",
+    icon: "heart",
+    requirements: {
+      habitCategory: "spiritual"
+    }
+  },
+  {
     id: "habits-5",
     name: "Habit Collector",
     description: "Create 5 habits",
@@ -224,6 +293,8 @@ export const categoryColors: Record<HabitCategory, string> = {
   social: "category-social",
   productivity: "category-productivity",
   creativity: "category-creativity",
+  programming: "category-programming",
+  spiritual: "category-spiritual",
   other: "category-other"
 };
 
@@ -234,5 +305,7 @@ export const categoryIcons: Record<HabitCategory, string> = {
   social: "users",
   productivity: "check-square",
   creativity: "pen-tool",
+  programming: "code",
+  spiritual: "heart",
   other: "circle"
 };

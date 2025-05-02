@@ -94,7 +94,24 @@
     @apply bg-habito-orange;
   }
   
+  .category-programming {
+    @apply bg-blue-400;
+  }
+  
+  .category-spiritual {
+    @apply bg-purple-300;
+  }
+  
   .category-other {
     @apply bg-habito-gray;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }
